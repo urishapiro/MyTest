@@ -4,42 +4,40 @@
     <script src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script>
     <script type="text/javascript">
 
-  var app = angular.module('getFromGitHubApp', ["ngStorage"])
+        var app = angular.module('getFromGitHubApp', ["ngStorage"])
 
-  function GetInfoFromGitHub($scope, $http){
-	 $scope.RunSearch = function(name) {
-	 dataurl ='https://api.github.com/search/repositories?q=' + name;
-        $http.get(dataurl).success(function(data){
-        $scope.Repositories = data.items;
-		}
-		)};
-		app.controller('MyController', function ($scope, $sessionStorage) {
-            $scope.bookmarksite = function (name,url) {
-                $sessionStorage.SessionMessage = "Name:" +name + "Url:" + +url;
+        function GetInfoFromGitHub($scope, $http) {
+            $scope.RunSearch = function (name) {
+                dataurl = 'https://api.github.com/search/repositories?q=' + name;
+                $http.get(dataurl).success(function (data) {
+                    $scope.Repositories = data.items;
+                }
+                )
+            };
+            app.controller('MyController', function ($scope, $sessionStorage) {
+                $scope.bookmarksite = function (name, url) {
+                    $sessionStorage.SessionMessage = "Name:" + name + "Url:" + +url;
+                }
+
+            })
+        }
+
+        function RunSearchOnEnterClicked(e) {
+            if (e.keyCode == 13) {
+                document.getElementById('searchBtn').click();
             }
-
-        })
-  }
-
-function RunSearchOnEnterClicked(e)
-{
- if (e.keyCode == 13)
-    {
-		document.getElementById('searchBtn').click();
-	}
-}
-function SaveBookmarkToLocalStorage(str1)
-{
-	localStorage.setItem('bookmark', JSON.stringify(str1));
-}
+        }
+        function SaveBookmarkToLocalStorage(str1) {
+            localStorage.setItem('bookmark', JSON.stringify(str1));
+        }
     </script>
 
 </head>
 <body>
     <div ng-app="getFromGitHubApp" ng-controller="GetInfoFromGitHub">
         <table>
-            <tr >
-                     <td >
+            <tr>
+                <td>
                     Search in GitHub:
                     <br />
                     <br />
@@ -47,7 +45,7 @@ function SaveBookmarkToLocalStorage(str1)
                     <input type="text" id="searchInput" onkeydown="RunSearchOnEnterClicked(event)" style="float:left;" ng-model="enteredValue">
                     <br />
                 <td>
-</tr>
+            </tr>
             <tr ng-repeat="Repository in Repositories | filter:query">
                 <td>
                     <h3>{{Repository.name}}</h3>
