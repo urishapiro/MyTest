@@ -14,12 +14,6 @@
                 }
                 )
             };
-            app.controller('MyController', function ($scope, $sessionStorage) {
-                $scope.bookmarksite = function (name, url) {
-                    $sessionStorage.SessionMessage = "Name:" + name + "Url:" + +url;
-                }
-
-            })
         }
 
         function RunSearchOnEnterClicked(e) {
